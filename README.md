@@ -19,5 +19,6 @@ A simplified Web Application built with Vite and Vue.js using **[TheMealDB](http
 - _Vue Router_
 - _Vuex_
 - _Typescript_
+- _Tailwind CSS_
 
 ... and more. Full list of dependencies and additional information is available in **`package.json`** file.
