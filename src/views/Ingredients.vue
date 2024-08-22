@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
+
 import axiosClient from '../axiosClient';
 import { Ingredient, IngredientsData } from '../store/types';
 
@@ -14,8 +15,6 @@ const computedIngredients = computed(() => {
     return filteredIngredients.length > 0 ? filteredIngredients : ingredients.value
 })
 
-
-
 onMounted(async () => {
     const { data }: IngredientsData = await axiosClient.get('list.php?i=list')
     ingredients.value = data.meals
@@ -23,7 +22,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="container py-4">
+    <section class="container py-4">
         <h1 class="text-4xl font-bold mb-4 text-orange-600">Ingredients</h1>
 
         <input type="text" class="rounded border-2 border-gray-200 w-full mb-4" placeholder="Search for Ingredients"
@@ -34,11 +33,11 @@ onMounted(async () => {
                 class="bg-white rounded mb-3 shadow-lg hover:shadow-sm transition">
                 <router-link
                     :to="{ name: 'byIngredient', params: { ingredient: item.strIngredient.toLowerCase().split(' ').join('_') } }"
-                    class="block w-full h-full p-3 hover:text-orange-500 transition-colors">
+                    class="block w-full h-full p-3 hover:text-orange-500 focus-visible:text-orange-500 transition-colors">
 
                     <p class="text-2xl font-bold ">{{ item.strIngredient }}</p>
                 </router-link>
             </li>
         </ul>
-    </div>
+    </section>
 </template>

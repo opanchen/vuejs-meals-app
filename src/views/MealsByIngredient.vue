@@ -17,12 +17,12 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="container py-4">
+    <section class="container py-4">
         <template v-if="meals">
             <MealList :meals="meals" />
         </template>
         <template v-else>
             <FallbackMessage :message="'No results for now... Choose another option or try again later.'" />
         </template>
-    </div>
+    </section>
 </template>

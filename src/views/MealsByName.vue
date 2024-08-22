@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="container py-4">
+    <section class="container py-4">
         <input type="text" class="rounded border-2 border-gray-200 w-full mb-4" placeholder="Search for Meals"
             v-model="keyword" @change="searchMeals" />
 
@@ -44,5 +44,5 @@ onMounted(() => {
         <template v-else>
             <FallbackMessage :message="'No results for now... Choose another option or try again later.'" />
         </template>
-    </div>
+    </section>
 </template>

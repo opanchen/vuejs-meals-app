@@ -22,11 +22,11 @@ watch(route, () => {
 </script>
 
 <template>
-    <div class="container py-4">
+    <section class="container py-4">
         <ul class="flex gap-1 flex-wrap justify-center mb-4">
             <li v-for="letter in letters" :key="letter">
                 <router-link :to="{ name: 'byLetter', params: { letter } }"
-                    class="inline-block p-1 hover:text-orange-500 hover:scale-125 transition">
+                    class="inline-block p-1 hover:text-orange-500 hover:scale-125 focus-visible:text-orange-500 focus-visible:scale-125 transition">
                     {{ letter }}
                 </router-link>
             </li>
@@ -41,5 +41,5 @@ watch(route, () => {
         <template v-else>
             <FallbackMessage :message="'No results for now... Choose another option or try again later.'" />
         </template>
-    </div>
+    </section>
 </template>

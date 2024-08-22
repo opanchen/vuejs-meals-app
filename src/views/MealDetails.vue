@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+
 import axiosClient from '../axiosClient';
 import { Meal } from '../store/types';
 import YouTubeButton from '../components/YouTubeButton.vue';
+import FallbackMessage from '../components/FallbackMessage.vue';
 
 type FetchMealByIdData = {
     meals: Meal[]
@@ -25,25 +27,31 @@ onMounted(async () => {
 
 <template>
     <template v-if="meal">
-        <div class="container py-4">
+        <section class="container py-4 text-white">
             <h1 class="text-5xl font-bold mb-5 text-orange-500">{{ meal.strMeal }}</h1>
-            <img :src="meal.strMealThumb" :alt="meal.strMeal">
-            <div class="grid grid-cols-1 md:grid-cols-3">
-                <p v-if="meal.strCategory" class="flex justify-center">
-                    <span class="font-bold text-orange-500 pr-1">Category: </span> {{ meal.strCategory }}
-                </p>
 
-                <p v-if="meal.strTags" class="flex justify-center">
-                    <span class="font-bold text-orange-500  pr-1">Tags: </span> {{ meal.strTags }}
-                </p>
+            <div class="flex flex-col gap-4 xl:flex-row xl:mb-4">
+                <img :src="meal.strMealThumb" :alt="meal.strMeal">
 
-                <p v-if="meal.strArea" class="flex justify-center">
-                    <span class="font-bold text-orange-500  pr-1">Area: </span> {{ meal.strArea }}
-                </p>
+                <div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 xl:">
+                        <p v-if="meal.strCategory" class="flex justify-center">
+                            <span class="font-bold text-orange-500 pr-1">Category: </span> {{ meal.strCategory }}
+                        </p>
+
+                        <p v-if="meal.strTags" class="flex justify-center">
+                            <span class="font-bold text-orange-500  pr-1">Tags: </span> {{ meal.strTags }}
+                        </p>
+
+                        <p v-if="meal.strArea" class="flex justify-center">
+                            <span class="font-bold text-orange-500  pr-1">Area: </span> {{ meal.strArea }}
+                        </p>
+                    </div>
+
+                    <p v-if="meal.strInstructions" class="instructions relative pl-4 my-4">{{ meal.strInstructions }}
+                    </p>
+                </div>
             </div>
-
-            <p v-if="meal.strInstructions" class="instructions relative pl-4 my-4">{{ meal.strInstructions }}</p>
-
 
             <div class="grid grid-cols-1 md:grid-cols-2 smOnly:gap-4">
                 <div>
@@ -51,7 +59,8 @@ onMounted(async () => {
 
                     <ul>
                         <template v-for="el in 20" :key="el">
-                            <li v-if="meal[`strIngredient${el}`]?.trim()" class="pt-1 px-2 border-[1px]">
+                            <li v-if="meal[`strIngredient${el}`]?.trim()"
+                                class="pt-1 px-2 border-[1px] border-gray-400">
                                 <span class="md:hidden">
                                     {{ el }}.
                                 </span>
@@ -66,7 +75,7 @@ onMounted(async () => {
 
                     <ul>
                         <template v-for="el in 20" :key="el">
-                            <li v-if="meal[`strMeasure${el}`]?.trim()" class="pt-1 px-2 border-[1px]">
+                            <li v-if="meal[`strMeasure${el}`]?.trim()" class="pt-1 px-2 border-[1px] border-gray-400">
                                 <span class="md:hidden">
                                     {{ el }}.
                                 </span>
@@ -82,19 +91,17 @@ onMounted(async () => {
 
                 <a v-if="meal.strSource?.trim()" :href="meal.strSource" target="_blank"
                     rel="nofollow noopener noreferrer"
-                    class="text-[14px] px-3 py-2 rounded-lg border-2 border-gray-600 text-white bg-gray-500 hover:bg-gray-600 transition-colors">
+                    class="text-[14px] px-3 py-2 rounded-lg border-2 border-gray-600 text-white bg-gray-500 hover:bg-gray-600 focus-visible:bg-gray-600 transition-colors">
                     View the original source
                 </a>
             </div>
 
-        </div>
+        </section>
     </template>
 
 
     <template v-else>
-        <p>
-            No info
-        </p>
+        <FallbackMessage :message="'No results for now... Choose another option or try again later.'" />
     </template>
 </template>
 
